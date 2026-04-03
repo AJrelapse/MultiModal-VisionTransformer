@@ -26,7 +26,7 @@ const Navbar = () => {
 
         <div className="flex gap-6 text-sm font-medium">
           <button
-            onClick={() => navigate("/home")}
+            onClick={() => navigate("/text-to-image")}
             className={`${isActive("/home")} transition`}
           >
             Text → Image

@@ -37,7 +37,7 @@ const Landing = () => {
         <div className="flex gap-4 mt-8">
           
           <button
-            onClick={() => navigate("/home")}
+            onClick={() => navigate("/text-to-image")}
             className="bg-white text-black px-6 py-3 rounded-full text-sm font-medium hover:scale-105 transition"
           >
             Text to Image

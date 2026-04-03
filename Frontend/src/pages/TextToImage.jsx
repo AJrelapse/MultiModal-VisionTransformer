@@ -5,7 +5,7 @@ import ImageGrid from "../components/ImageGrid";
 import DarkVeil from "../components/DarkVeil";
 import Navbar from "../components/Navbar";
 
-function Home() {
+function TextToImage() {
   const [images, setImages] = useState([]);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
@@ -66,4 +66,4 @@ function Home() {
   );
 }
 
-export default Home;
+export default TextToImage;
