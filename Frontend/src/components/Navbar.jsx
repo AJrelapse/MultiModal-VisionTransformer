@@ -1,19 +1,45 @@
 import React from "react";
+import { useNavigate, useLocation } from "react-router-dom";
 
 const Navbar = () => {
-  return (
-    <div className="absolute top-0 left-0 w-full flex justify-between items-center px-8 py-5 z-20">
-      <div className="text-white text-xl font-semibold tracking-wide">
-        PixSense
-      </div>
+  const navigate = useNavigate();
+  const location = useLocation();
 
-      <div className="flex gap-8 text-white/80 text-sm">
-        <a href="#home" className="hover:text-white transition">
-          Home
-        </a>
-        <a href="#docs" className="hover:text-white transition">
-          Docs
-        </a>
+  const isActive = (path) =>
+    location.pathname === path
+      ? "text-white"
+      : "text-white/60 hover:text-white";
+
+  return (
+    <div className="fixed top-4 left-1/2 -translate-x-1/2 w-[95%] max-w-6xl z-50">
+      
+      <div className="flex items-center justify-between px-6 py-3 rounded-2xl
+        bg-white/10 backdrop-blur-xl border border-white/20
+        shadow-lg shadow-black/30">
+
+        <div
+          onClick={() => navigate("/")}
+          className="text-white text-lg font-semibold tracking-wide cursor-pointer hover:opacity-80 transition"
+        >
+          PixSense
+        </div>
+
+        <div className="flex gap-6 text-sm font-medium">
+          <button
+            onClick={() => navigate("/home")}
+            className={`${isActive("/home")} transition`}
+          >
+            Text → Image
+          </button>
+
+          <button
+            onClick={() => navigate("/image-to-text")}
+            className={`${isActive("/image-to-text")} transition`}
+          >
+            Image → Text
+          </button>
+        </div>
+
       </div>
     </div>
   );
