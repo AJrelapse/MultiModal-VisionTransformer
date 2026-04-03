@@ -12,6 +12,7 @@ from transformers import AutoTokenizer
 
 from model import CLIPModel
 from retrieval import load_or_create_embeddings
+from captions import load_or_create_text_embeddings
 
 app = FastAPI()
 
@@ -48,6 +49,13 @@ image_transform = transforms.Compose([
     )
 ])
 
+CAPTIONS_FILE = "captions.txt"
+
+print("Preparing text embeddings...")
+text_embeddings, captions_list = load_or_create_text_embeddings(
+    model, tokenizer, CAPTIONS_FILE
+)
+print("Text embeddings ready!")
 
 @app.get("/")
 def home():
@@ -113,4 +121,27 @@ async def text_to_image(text: str = Form(...)):
 
     return {
         "images": results
+    }
+
+@app.post("/image-to-text")
+async def image_to_text(file: UploadFile = File(...)):
+
+    image_bytes = await file.read()
+    image = Image.open(io.BytesIO(image_bytes)).convert("RGB")
+
+    image = image_transform(image).unsqueeze(0)
+
+    with torch.no_grad():
+        img_emb = model.encode_image(image)
+
+        sims = text_embeddings @ img_emb.T
+        topk = sims.squeeze().topk(3).indices
+
+    results = []
+
+    for idx in topk:
+        results.append(captions_list[idx])
+
+    return {
+        "captions": results
     }
