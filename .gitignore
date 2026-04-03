@@ -29,3 +29,5 @@ __pycache__/
 .env
 
 best_model.pt
+
+images/
