@@ -45,7 +45,7 @@ function TextToImage() {
       <div className="relative z-10 flex flex-col items-center pt-28 px-6">
 
         <h1 className="text-white text-3xl md:text-5xl font-semibold text-center max-w-3xl">
-          Multimodal Image Search
+          Text → Image Understanding
         </h1>
 
         <div className="w-full max-w-2xl mt-8">

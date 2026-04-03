@@ -43,7 +43,9 @@ const Landing = () => {
             Text to Image
           </button>
 
-          <button className="backdrop-blur-md bg-white/10 border border-white/20 text-white px-6 py-3 rounded-full text-sm hover:bg-white/20 transition">
+          <button 
+          onClick={() => navigate("/image-to-text")}
+          className="backdrop-blur-md bg-white/10 border border-white/20 text-white px-6 py-3 rounded-full text-sm hover:bg-white/20 transition">
             Image to Text
           </button>
 
