@@ -5,7 +5,7 @@ import DarkVeil from "../components/DarkVeil";
 function ImageToText() {
   const [image, setImage] = useState(null);
   const [preview, setPreview] = useState(null);
-  const [result, setResult] = useState("");
+  const [result, setResult] = useState([]);
   const [loading, setLoading] = useState(false);
 
   const handleUpload = (e) => {
@@ -30,13 +30,14 @@ function ImageToText() {
     });
 
     const data = await res.json();
-    setResult(data.captions);
+    setResult(data.captions || []);
     setLoading(false);
   };
 
   return (
     <div className="relative w-full min-h-screen bg-black overflow-hidden">
 
+      {/* Background */}
       <div className="absolute inset-0 z-0 opacity-60">
         <DarkVeil
           hueShift={260}
@@ -56,8 +57,8 @@ function ImageToText() {
           Image → Text Understanding
         </h1>
 
+        {/* Upload Box */}
         <div className="mt-10 w-full max-w-xl">
-
           <label className="flex flex-col items-center justify-center 
             border border-white/20 bg-white/5 backdrop-blur-md 
             rounded-2xl p-8 cursor-pointer hover:bg-white/10 transition">
@@ -73,19 +74,20 @@ function ImageToText() {
               className="hidden"
             />
           </label>
-
         </div>
 
+        {/* FULL IMAGE PREVIEW */}
         {preview && (
-          <div className="mt-6">
+          <div className="mt-6 max-w-3xl">
             <img
               src={preview}
               alt="preview"
-              className="w-64 h-64 object-cover rounded-xl border border-white/10"
+              className="w-full max-h-[400px] object-contain rounded-xl border border-white/10"
             />
           </div>
         )}
 
+        {/* Button */}
         {image && (
           <button
             onClick={handleSubmit}
@@ -95,15 +97,25 @@ function ImageToText() {
           </button>
         )}
 
+        {/* Loading */}
         {loading && (
           <div className="mt-6 text-white/70 animate-pulse">
             Analyzing image...
           </div>
         )}
 
-        {result && (
-          <div className="mt-8 max-w-2xl text-center bg-white/5 backdrop-blur-md border border-white/10 rounded-2xl p-6">
-            <p className="text-white/90">{result}</p>
+        {/* RESULTS */}
+        {result.length > 0 && (
+          <div className="mt-8 max-w-2xl bg-white/5 backdrop-blur-md border border-white/10 rounded-2xl p-6">
+            <h2 className="text-white text-lg mb-4 font-semibold">
+              Generated Captions:
+            </h2>
+
+            <ul className="list-disc list-inside text-white/90 space-y-2 text-left">
+              {result.map((caption, index) => (
+                <li key={index}>{caption}</li>
+              ))}
+            </ul>
           </div>
         )}
 
